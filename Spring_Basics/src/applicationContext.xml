@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!--Load the properties file -->
+	<context:property-placeholder
+		location="classpath:sport.properties" />
+	
+	
+	<!-- Define your beans here -->
+
+	<bean id="myFortune" class="com.dev.demo.HappyFortuneService">
+	</bean>
+
+	<!-- Bean for BaseballCoach -->
+	<bean id="myCoach" class="com.dev.demo.BaseballCoach">
+
+
+		<!--Configure the DI in spring config file -->
+
+		<!-- set up the constructor injection -->
+
+		<constructor-arg ref="myFortune" />
+	</bean>
+
+
+	<!-- Bean created for TrackCoach -->
+
+	<bean id="myFortune1" class="com.dev.demo.HappyFortuneService">
+	</bean>
+
+
+	<bean id="mc" class="com.dev.demo.TrackCoach">
+		<constructor-arg ref="myFortune1" />
+	</bean>
+
+
+
+	<bean id="myCC" class="com.dev.demo.CricketCoach">
+		<!-- setup our setter injection -->
+		<property name="fortuneService" ref="myFortune"></property>
+		<property name="playerName" value="${playername}" />
+		<property name="team" value="${teamname}" />
+
+	</bean>
+
+</beans>
